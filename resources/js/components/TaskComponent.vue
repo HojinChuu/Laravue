@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        <add-task @task-added="refresh"></add-task>
         <ul class="list-group">
             <li 
             v-for="(task, index) in tasks.data" 
@@ -12,7 +13,10 @@
 </template>
 
 <script>
+import AddTask from './AddTaskComponent';
+
 export default {
+    components: { AddTask },
     data() {
         return {
             tasks: {}
@@ -26,6 +30,9 @@ export default {
         getResult(page = 1) {
             axios.get('http://localhost:8000/tasks?page=' + page)
             .then(res => this.tasks = res.data)
+        },
+        refresh(tasks) {
+            this.tasks = tasks
         }
     }
 }
