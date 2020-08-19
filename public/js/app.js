@@ -2070,6 +2070,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2080,7 +2088,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       tasks: {},
-      taskToEdit: {}
+      taskToEdit: {},
+      search: ''
     };
   },
   created: function created() {
@@ -2105,6 +2114,26 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('http://localhost:8000/tasks/edit/' + id).then(function (res) {
         return _this3.taskToEdit = res.data;
       });
+    },
+    deleteTask: function deleteTask(id) {
+      var _this4 = this;
+
+      axios["delete"]('http://localhost:8000/tasks/' + id).then(function (res) {
+        return _this4.tasks = res.data;
+      });
+    },
+    searchTask: function searchTask() {
+      var _this5 = this;
+
+      if (this.search > 3) {
+        axios.get("http://localhost:8000/tasks/".concat(this.search)).then(function (res) {
+          return _this5.tasks = res.data;
+        });
+      } else {
+        axios.get('http://localhost:8000/tasks').then(function (res) {
+          return _this5.tasks = res.data;
+        });
+      }
     },
     refresh: function refresh(tasks) {
       this.tasks = tasks;
@@ -38579,6 +38608,33 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
+      _c("div", { staticClass: "form-row" }, [
+        _c("div", { staticClass: "col-row" }, [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.search,
+                expression: "search"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { type: "text", placeholder: "search.." },
+            domProps: { value: _vm.search },
+            on: {
+              keyup: _vm.searchTask,
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.search = $event.target.value
+              }
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
       _c("add-task", { on: { "task-added": _vm.refresh } }),
       _vm._v(" "),
       _c(
@@ -38596,23 +38652,39 @@ var render = function() {
               [
                 _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(task.name))]),
                 _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary my-3",
-                    attrs: {
-                      type: "button",
-                      "data-toggle": "modal",
-                      "data-target": "#editModal"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.getTask(task.id)
+                _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary my-3",
+                      attrs: {
+                        type: "button",
+                        "data-toggle": "modal",
+                        "data-target": "#editModal"
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.getTask(task.id)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("\n                Editer\n            ")]
-                )
+                    },
+                    [_vm._v("\n                    Editer\n                ")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-danger",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteTask(task.id)
+                        }
+                      }
+                    },
+                    [_vm._v("Del")]
+                  )
+                ])
               ]
             )
           }),

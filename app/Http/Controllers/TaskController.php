@@ -14,7 +14,12 @@ class TaskController extends Controller
      */
     public function index()
     {
-        return $this->refresh();
+        if (request('search') !== null) {
+            $tasks['data'] = Task::where('name', 'like', '%' . request('search') . '%')->get();
+            return response()->json($tasks);
+        } else {
+            return $this->refresh();
+        }
     }
 
     /**
@@ -92,7 +97,13 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $task = Task::find($id);
+
+        if ($task->delete()) {
+            return $this->refresh();
+        } else {
+            return response()->json(['error' => 'Failed destroy'], 425);
+        }
     }
 
     private function refresh() 
