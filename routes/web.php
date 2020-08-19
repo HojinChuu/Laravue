@@ -20,3 +20,4 @@ Route::get('/', function () {
 Route::get('/tasks', 'TaskController@index');
 Route::post('/tasks', 'TaskController@store');
 Route::get('/tasks/edit/{id}', 'TaskController@edit');
+Route::patch('/tasks/{id}', 'TaskController@update');

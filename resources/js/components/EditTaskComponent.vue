@@ -20,7 +20,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save Edit</button>
+                    <button type="submit" class="btn btn-primary" @click="update" data-dismiss="modal">Save Edit</button>
                 </div>
                 </div>
             </div>
@@ -30,6 +30,12 @@
 
 <script>
 export default {
-    props: ['taskToEdit']
+    props: ['taskToEdit'],
+    methods: {
+        update() {
+            axios.patch(`http://localhost:8000/tasks/${this.taskToEdit.id}`, { name: this.taskToEdit.name })
+            .then(res => this.$emit('task-updated', res.data))
+        }
+    }
 }
 </script>

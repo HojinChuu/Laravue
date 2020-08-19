@@ -24,7 +24,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" @click="taskStore" class="btn btn-primary">Save Add</button>
+                    <button type="submit" @click="taskStore" class="btn btn-primary" data-dismiss="modal">Save Add</button>
                 </div>
                 </div>
             </div>

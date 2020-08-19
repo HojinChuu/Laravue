@@ -2003,7 +2003,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['taskToEdit']
+  props: ['taskToEdit'],
+  methods: {
+    update: function update() {
+      var _this = this;
+
+      axios.patch("http://localhost:8000/tasks/".concat(this.taskToEdit.id), {
+        name: this.taskToEdit.name
+      }).then(function (res) {
+        return _this.$emit('task-updated', res.data);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -38352,7 +38363,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary",
-                  attrs: { type: "submit" },
+                  attrs: { type: "submit", "data-dismiss": "modal" },
                   on: { click: _vm.taskStore }
                 },
                 [_vm._v("Save Add")]
@@ -38459,7 +38470,26 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(1)
+            _c("div", { staticClass: "modal-footer" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-secondary",
+                  attrs: { type: "button", "data-dismiss": "modal" }
+                },
+                [_vm._v("Close")]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  attrs: { type: "submit", "data-dismiss": "modal" },
+                  on: { click: _vm.update }
+                },
+                [_vm._v("Save Edit")]
+              )
+            ])
           ])
         ])
       ]
@@ -38489,27 +38519,6 @@ var staticRenderFns = [
           }
         },
         [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-footer" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary",
-          attrs: { type: "button", "data-dismiss": "modal" }
-        },
-        [_vm._v("Close")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-        [_vm._v("Save Edit")]
       )
     ])
   }
@@ -38608,7 +38617,10 @@ var render = function() {
             )
           }),
           _vm._v(" "),
-          _c("edit-task", { attrs: { taskToEdit: _vm.taskToEdit } })
+          _c("edit-task", {
+            attrs: { taskToEdit: _vm.taskToEdit },
+            on: { "task-updated": _vm.refresh }
+          })
         ],
         2
       ),

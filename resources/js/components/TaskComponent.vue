@@ -13,7 +13,7 @@
                     Editer
                 </button>
             </li>
-            <edit-task :taskToEdit="taskToEdit"></edit-task>
+            <edit-task :taskToEdit="taskToEdit" @task-updated="refresh"></edit-task>
         </ul>
         <pagination :data="tasks" @pagination-change-page="getResult" class="mt-5"></pagination>
     </div>
