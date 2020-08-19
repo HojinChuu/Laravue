@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-        <div class="row justify-content-center">
-            <h1>Home</h1>
-        </div>
+        <h1>Home</h1>
     </div>
 </template>
 
