@@ -1942,9 +1942,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: function data() {
+    return {
+      tasks: {}
+    };
+  },
+  created: function created() {
+    var _this = this;
+
+    axios.get('http://localhost:8000/tasks').then(function (res) {
+      return _this.tasks = res.data;
+    });
   }
 });
 
@@ -37563,34 +37573,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("ul", { staticClass: "list-group" }, [
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Task 1")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Task 2")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Task 3")])
-        ]),
-        _vm._v(" "),
-        _c("li", { staticClass: "list-group-item" }, [
-          _c("a", { attrs: { href: "#" } }, [_vm._v("Task 4")])
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "ul",
+      { staticClass: "list-group" },
+      _vm._l(_vm.tasks, function(task, index) {
+        return _c("li", { key: index, staticClass: "list-group-item" }, [
+          _c("a", { attrs: { href: "#" } }, [_vm._v(_vm._s(task.name))])
         ])
-      ])
-    ])
-  }
-]
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -53047,9 +53043,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TaskComponent__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/TaskComponent */ "./resources/js/components/TaskComponent.vue");
 
 
+
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
-
-
 var routes = [{
   path: '/',
   component: _components_HomeComponent__WEBPACK_IMPORTED_MODULE_2__["default"]

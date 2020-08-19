@@ -1,18 +1,25 @@
 <template>
     <div class="container">
         <ul class="list-group">
-            <li class="list-group-item"><a href="#">Task 1</a></li>
-            <li class="list-group-item"><a href="#">Task 2</a></li>
-            <li class="list-group-item"><a href="#">Task 3</a></li>
-            <li class="list-group-item"><a href="#">Task 4</a></li>
+            <li 
+            v-for="(task, index) in tasks" 
+            :key="index" class="list-group-item">
+                <a href="#">{{ task.name }}</a>
+            </li>
         </ul>
     </div>
 </template>
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data() {
+            return {
+                tasks: {}
+            }
+        },
+        created() {
+            axios.get('http://localhost:8000/tasks')
+            .then(res => this.tasks = res.data)
         }
     }
 </script>
